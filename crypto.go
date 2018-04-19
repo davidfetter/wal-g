@@ -144,7 +144,15 @@ func GetKeyRingId() string {
 	return os.Getenv("WALE_GPG_KEY_ID")
 }
 
-const gpgBin = "gpg"
+// Some people's gpg is spelled gpg2
+func GetgpgBin() string {
+    if _, isset := os.LookupEnv("GPG_BINARY"); isset == true {
+        return os.Getenv("GPG_BINARY")
+    }
+    return "gpg"
+}
+
+var gpgBin = GetgpgBin()
 
 // CachedKey is the data transfer object describing format of key ring cache
 type CachedKey struct {
